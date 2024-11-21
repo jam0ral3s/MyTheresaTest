@@ -1,38 +1,70 @@
 import React from 'react';
-import {ScrollView, ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, FlatList, View} from 'react-native';
 import styled from 'styled-components/native';
 import {CategorySection} from './CategorySection';
 import {useMoviesData} from '../../hooks/movies/useMoviesByCategories.ts';
 import {Header} from '../../components/Header/Header.tsx';
 
-export const HomeScreen = (): React.ReactElement => {
-  const {loading, categories} = useMoviesData();
+export const HomeScreen: React.FC = () => {
+  const {
+    loadingGenres,
+    genres,
+    moviesByGenre,
+    loadMoreMoviesByGenre,
+    loadingByGenre,
+  } = useMoviesData();
 
-  if (loading) {
+  if (loadingGenres) {
     return (
       <View>
-        <Header title="Movie App" subtitle="Find your favorite movies!" />
-        <LoadingContainer testID="loading-indicator">
-          <ActivityIndicator size="large" color="#0000ff" />
+        <Header
+          title="Welcome to Movie App"
+          subtitle="Find your favorite movies here!"
+        />
+        <LoadingContainer>
+          <ActivityIndicator
+            testID="loading-indicator"
+            size="large"
+            color="#0000ff"
+          />
         </LoadingContainer>
       </View>
     );
   }
 
   return (
-    <ScrollView>
-      <Header title="Movie App" subtitle="Find your favorite movies!" />
-      {categories.map(category => (
+    <FlatList
+      data={genres}
+      keyExtractor={item => `${item.id}`}
+      renderItem={({item}) => (
         <CategorySection
-          key={category.id}
-          genre={category.name}
-          movies={category.movies}
+          genre={item.name}
+          movies={moviesByGenre[item.id] || []}
+          isLoading={loadingByGenre[item.id]}
+          loadMore={() => loadMoreMoviesByGenre(item.id)}
         />
-      ))}
-    </ScrollView>
+      )}
+      contentContainerStyle={{paddingBottom: 16}}
+      ListHeaderComponent={
+        <Header
+          title="Welcome to Movie App"
+          subtitle="Find your favorite movies here!"
+        />
+      }
+      ListFooterComponentStyle={
+        loadingGenres && (
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            style={{marginVertical: 16}}
+          />
+        )
+      }
+    />
   );
 };
 
+// Estilos
 const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;

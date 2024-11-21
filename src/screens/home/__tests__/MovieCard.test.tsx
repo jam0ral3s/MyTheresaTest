@@ -1,13 +1,16 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import {MovieCard} from '../MovieCard';
+import {Movie} from '@/types/tmdb';
 
 describe('MovieCard', () => {
-  const mockMovie = {
+  const mockMovie: Movie = {
     id: 1,
-    name: 'Mock Movie',
+    title: 'Mock Movie',
     poster_path: '/mock.jpg',
     vote_average: 8.5,
+    overview: '',
+    release_date: '',
   };
 
   it('show all data correctly', () => {
