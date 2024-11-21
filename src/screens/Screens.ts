@@ -1,1 +1,0 @@
-type Screen = 'Home' | 'Detail';

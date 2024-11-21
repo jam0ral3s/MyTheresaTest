@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,14 +13,10 @@ import {ThemeProvider} from 'styled-components/native';
 import {BAISC_THEME} from './styles/theme';
 import {HomeScreen} from './screens/home/HomeScreen';
 import {DetailScreen} from './screens/detail/DetailScreen';
+import {StackNavigator} from './screens/navigation/StackNavigator';
 
-function App(): React.JSX.Element {
+const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [currentScreen, setCurrentScreen] = useState<Screen>('Home');
-
-  const navigate = (screen: Screen) => {
-    setCurrentScreen(screen);
-  };
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -37,14 +33,19 @@ function App(): React.JSX.Element {
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
           <View style={styles.container}>
-            {currentScreen === 'Home' && <HomeScreen navigate={navigate} />}
-            {currentScreen === 'Detail' && <DetailScreen navigate={navigate} />}
+            <StackNavigator
+              screens={{
+                Home: HomeScreen,
+                Detail: DetailScreen,
+              }}
+              initialRoute="Home"
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
     </ThemeProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
