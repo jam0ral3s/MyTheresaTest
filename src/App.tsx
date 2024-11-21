@@ -1,11 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,10 +11,16 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ThemeProvider} from 'styled-components/native';
 import {BAISC_THEME} from './styles/theme';
-import {CustomButton} from './components/Button';
+import {HomeScreen} from './screens/home/HomeScreen';
+import {DetailScreen} from './screens/detail/DetailScreen';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [currentScreen, setCurrentScreen] = useState<Screen>('Home');
+
+  const navigate = (screen: Screen) => {
+    setCurrentScreen(screen);
+  };
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -29,7 +28,7 @@ function App(): React.JSX.Element {
 
   return (
     <ThemeProvider theme={BAISC_THEME}>
-      <SafeAreaView style={backgroundStyle}>
+      <SafeAreaView style={(styles.safeAreaView, backgroundStyle)}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
@@ -38,10 +37,8 @@ function App(): React.JSX.Element {
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
           <View style={styles.container}>
-            <CustomButton
-              title="Es una prueba sasdasdadsadsad"
-              onPress={() => {}}
-            />
+            {currentScreen === 'Home' && <HomeScreen navigate={navigate} />}
+            {currentScreen === 'Detail' && <DetailScreen navigate={navigate} />}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -54,6 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  safeAreaView: {
+    flex: 1,
   },
 });
 

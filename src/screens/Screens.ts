@@ -1,0 +1,1 @@
+type Screen = 'Home' | 'Detail';
