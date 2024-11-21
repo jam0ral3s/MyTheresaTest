@@ -1,6 +1,7 @@
-import {CustomButton} from '../../components/Button';
+import {CustomButton} from '../../components/Button/Button';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import {Screen} from '../navigation/StackNavigator';
 
 export const DetailScreen = ({
   navigate,

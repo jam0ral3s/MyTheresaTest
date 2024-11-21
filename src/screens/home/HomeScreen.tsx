@@ -1,30 +1,40 @@
-import {CustomButton} from '../../components/Button';
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, ActivityIndicator, View} from 'react-native';
+import styled from 'styled-components/native';
+import {CategorySection} from './CategorySection';
+import {useMoviesData} from '../../hooks/movies/useMoviesByCategories.ts';
+import {Header} from '../../components/Header/Header.tsx';
 
-export const HomeScreen = ({
-  navigate,
-}: {
-  navigate: (screen: Screen) => void;
-}): React.JSX.Element => {
+export const HomeScreen = (): React.ReactElement => {
+  const {loading, categories} = useMoviesData();
+
+  if (loading) {
+    return (
+      <View>
+        <Header title="Movie App" subtitle="Find your favorite movies!" />
+        <LoadingContainer testID="loading-indicator">
+          <ActivityIndicator size="large" color="#0000ff" />
+        </LoadingContainer>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={styles.container}>
-          <CustomButton
-            title="Go To Detail"
-            onPress={() => navigate('Detail')}
-          />
-        </View>
-      </ScrollView>
-    </View>
+    <ScrollView>
+      <Header title="Movie App" subtitle="Find your favorite movies!" />
+      {categories.map(category => (
+        <CategorySection
+          key={category.id}
+          genre={category.name}
+          movies={category.movies}
+        />
+      ))}
+    </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
