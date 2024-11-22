@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import {Header} from '../Header';
+import {Header} from '../../Button/Header';
 
 describe('Header Component', () => {
   it('show title', () => {

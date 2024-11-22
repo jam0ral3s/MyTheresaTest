@@ -1,11 +1,12 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 
 import styled from 'styled-components/native';
-import {Header} from '../../components/Header/Header';
+import {Header} from '../../components/Header';
 import {Movie} from '@/types/tmdb';
 import {Navigate} from '../navigation/navigationTypes';
-import {CustomButton} from '../../components/Button/Button';
+import {CustomButton} from '../../components/Button';
+import {TopBar} from '../../components/TopBar';
 
 export const DetailScreen = ({
   navigate,
@@ -19,44 +20,48 @@ export const DetailScreen = ({
   }
 
   const {movie} = params!!;
-
   return (
-    <ScrollView style={{width: '100%'}}>
-      <Container>
-        <Header title={movie.title} />
-        <MainContent>
-          <ImageArea>
-            <Poster
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-              }}
-            />
-          </ImageArea>
-          <DescriptionArea>
-            <Overview>{movie.overview || 'No description available.'}</Overview>
-          </DescriptionArea>
-        </MainContent>
+    <View style={{width: '100%'}}>
+      <TopBar showBackButton={true} onBackPress={() => navigate?.('back')} />
+      <ScrollView style={{width: '100%'}}>
+        <Container>
+          <Header title={movie.title} />
+          <MainContent>
+            <ImageArea>
+              <Poster
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+                }}
+              />
+            </ImageArea>
+            <DescriptionArea>
+              <Overview>
+                {movie.overview || 'No description available.'}
+              </Overview>
+            </DescriptionArea>
+          </MainContent>
 
-        <AdditionalInfo>
-          <InfoText>{`⭐ Rating: ${movie.vote_average}`}</InfoText>
-          <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
-        </AdditionalInfo>
-        <CustomButton
-          title="Go To Home"
-          onPress={() => {
-            navigate('Home');
-          }}
-        />
-      </Container>
-    </ScrollView>
+          <AdditionalInfo>
+            <InfoText>{`⭐ Rating: ${movie.vote_average}`}</InfoText>
+            <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
+          </AdditionalInfo>
+          <CustomButton
+            title="Go To Home"
+            onPress={() => {
+              navigate('Home');
+            }}
+          />
+        </Container>
+      </ScrollView>
+    </View>
   );
 };
 
 const Container = styled.View`
-  padding: 16px;
+  padding-start: 16px;
+  padding-end: 16px;
   flex: 1;
   width: 100%;
-  background-color: #f0f020;
 `;
 
 const MainContent = styled.View`

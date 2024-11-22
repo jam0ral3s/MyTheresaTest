@@ -1,4 +1,16 @@
+import React from 'react';
 import styled from 'styled-components/native';
+
+interface CustomButtonProps {
+  title: string;
+  onPress: () => void;
+}
+
+export const CustomButton: React.FC<CustomButtonProps> = ({title, onPress}) => (
+  <StyledButton onPress={onPress}>
+    <StyledButtonText>{title}</StyledButtonText>
+  </StyledButton>
+);
 
 import {TouchableOpacity, Text} from 'react-native';
 

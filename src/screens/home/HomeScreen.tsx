@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useGetGenres} from '../../hooks/movies/useGetGenres.ts';
 import {CategorySection} from './components/CategorySection.tsx';
-import {Header} from '../../components/Header/Header.tsx';
+import {Header} from '../../components/Header.tsx';
 import {Navigate} from '../navigation/navigationTypes.ts';
 import {Genre} from '../../types/tmdb.ts';
 import {usePersistentState} from '../../hooks/usePersistentState.ts';

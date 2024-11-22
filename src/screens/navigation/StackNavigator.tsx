@@ -1,45 +1,53 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Screen, ScreenParams, Navigate} from './navigationTypes';
+import {
+  Screen,
+  Navigate,
+  paramsType,
+  NavigateRoutes,
+  RouteParams,
+} from './navigationTypes';
 
 interface StackNavigatorProps {
   screens: {
     [key in Screen]: React.ComponentType<{
       navigate: Navigate;
-      params?: ScreenParams['Home'] | ScreenParams['Detail'];
+      params?: paramsType;
     }>;
   };
-  initialRoute: Screen;
+  initialRoute: NavigateRoutes;
+  initialParams: paramsType;
 }
+
+type StackNavigation = {
+  route: NavigateRoutes;
+  params: RouteParams[Screen];
+};
 
 export const StackNavigator: React.FC<StackNavigatorProps> = ({
   screens,
   initialRoute,
+  initialParams,
 }) => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>(initialRoute);
-  const [params, setParams] = useState<ScreenParams[Screen]>();
+  const [navigationStack, setNavigationStack] = useState<StackNavigation[]>([
+    {route: initialRoute, params: initialParams},
+  ]);
 
-  const navigate: Navigate = (screen, routeParams) => {
-    setCurrentScreen(screen);
-    setParams(routeParams as ScreenParams[Screen]);
+  const navigate: Navigate = (route, params = undefined) => {
+    if (route === 'back') {
+      if (navigationStack.length > 1) {
+        setNavigationStack(prevStack => prevStack.slice(0, -1));
+      }
+    } else {
+      setNavigationStack(prevStack => [...prevStack, {route, params}]);
+    }
   };
-
-  const ScreenComponent = screens[currentScreen];
+  const CurrentScreenStack = navigationStack[navigationStack.length - 1];
+  const CurrentScreen = screens[CurrentScreenStack.route as Screen];
 
   return (
-    <View style={styles.container}>
-      <ScreenComponent
-        navigate={navigate}
-        params={params as ScreenParams[typeof currentScreen]}
-      />
+    <View style={{flex: 1}}>
+      <CurrentScreen navigate={navigate} params={CurrentScreenStack.params} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
