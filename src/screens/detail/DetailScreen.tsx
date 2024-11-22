@@ -24,7 +24,7 @@ export const DetailScreen = ({
     <View style={{width: '100%'}}>
       <TopBar showBackButton={true} onBackPress={() => navigate?.('back')} />
       <ScrollView style={{width: '100%'}}>
-        <Container>
+        <Container style={{marginBottom: 80}}>
           <Header title={movie.title} />
           <MainContent>
             <ImageArea>
@@ -46,7 +46,7 @@ export const DetailScreen = ({
             <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
           </AdditionalInfo>
           <CustomButton
-            title="Go To Home"
+            title="Add to favorites"
             onPress={() => {
               navigate('Home');
             }}
@@ -67,7 +67,6 @@ const Container = styled.View`
 const MainContent = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 16px;
 `;
 
 const ImageArea = styled.View`
@@ -84,7 +83,6 @@ const Poster = styled.Image`
 `;
 
 const DescriptionArea = styled.View`
-  flex: 2;
   max-width: 60%;
   margin-left: 16px;
   margin-bottom: 16px;

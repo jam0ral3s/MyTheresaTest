@@ -4,8 +4,10 @@ import {Genre} from '../../types/tmdb.ts';
 import {usePersistentState} from '../../hooks/usePersistentState.ts';
 
 export const useGetGenres = () => {
-  const [loadingGenres, setLoadingGenres] = useState(true);
   const [genres, setGenres] = usePersistentState<Genre[]>('Genres', []);
+  const [loadingGenres, setLoadingGenres] = useState(
+    genres.length === 0 ? true : false,
+  );
 
   useEffect(() => {
     const loadGenres = async () => {

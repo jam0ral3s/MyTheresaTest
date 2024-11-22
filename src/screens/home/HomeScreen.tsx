@@ -17,18 +17,24 @@ export const HomeScreen = ({
     'HomeScrollPosition',
     0,
   );
+  const [flatListRendered, setFlatListRendered] = useState<boolean>(false);
 
   const {loadingGenres, genres} = useGetGenres();
   const [visibleGenreIds, setVisibleGenreIds] = useState<number[]>([]);
 
   useEffect(() => {
-    if (!loadingGenres && genres.length > 0 && scrollPosition > 0) {
+    if (
+      !loadingGenres &&
+      genres.length > 0 &&
+      scrollPosition > 0 &&
+      flatListRendered
+    ) {
       flatListRef.current?.scrollToOffset({
         offset: scrollPosition,
         animated: false,
       });
     }
-  }, [loadingGenres, genres]);
+  }, [loadingGenres, genres, flatListRendered]);
 
   const onViewableItemsChanged = useRef(
     ({viewableItems}: {viewableItems: Array<{item: Genre}>}) => {
@@ -70,6 +76,7 @@ export const HomeScreen = ({
       }}
       scrollEventThrottle={20}
       contentContainerStyle={{paddingBottom: 16}}
+      onLayout={() => setFlatListRendered(true)}
       ListHeaderComponent={
         <Header
           title="Welcome to Movie App"
