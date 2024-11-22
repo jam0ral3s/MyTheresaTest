@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 interface MovieCardProps {
   movie: Movie;
-  onPress?: () => void;
+  onPress?: (movie: Movie) => void;
 }
 
 export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
@@ -16,7 +16,10 @@ export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
 
   return (
     <CardContainer>
-      <TouchableOpacity onPress={onPress} accessible accessibilityRole="button">
+      <TouchableOpacity
+        onPress={() => onPress?.(movie)}
+        accessible
+        accessibilityRole="button">
         <MoviePoster
           accessibilityRole="image"
           accessible

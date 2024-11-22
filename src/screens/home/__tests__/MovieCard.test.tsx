@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
-import {MovieCard} from '../MovieCard';
+import {MovieCard} from '../components/MovieCard';
 import {Movie} from '@/types/tmdb';
 
 describe('MovieCard', () => {

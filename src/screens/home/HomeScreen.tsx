@@ -1,18 +1,41 @@
-import React from 'react';
-import {ActivityIndicator, FlatList, View} from 'react-native';
-import styled from 'styled-components/native';
-import {CategorySection} from './CategorySection';
-import {useMoviesData} from '../../hooks/movies/useMoviesByCategories.ts';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, ActivityIndicator, FlatList} from 'react-native';
+import {useGetGenres} from '../../hooks/movies/useGetGenres.ts';
+import {CategorySection} from './components/CategorySection.tsx';
 import {Header} from '../../components/Header/Header.tsx';
+import {Navigate} from '../navigation/navigationTypes.ts';
+import {Genre} from '../../types/tmdb.ts';
+import {usePersistentState} from '../../hooks/usePersistentState.ts';
 
-export const HomeScreen: React.FC = () => {
-  const {
-    loadingGenres,
-    genres,
-    moviesByGenre,
-    loadMoreMoviesByGenre,
-    loadingByGenre,
-  } = useMoviesData();
+export const HomeScreen = ({
+  navigate,
+}: {
+  navigate?: Navigate;
+}): React.JSX.Element => {
+  const flatListRef = useRef<FlatList>(null);
+  const [scrollPosition, setScrollPosition] = usePersistentState<number>(
+    'HomeScrollPosition',
+    0,
+  );
+
+  const {loadingGenres, genres} = useGetGenres();
+  const [visibleGenreIds, setVisibleGenreIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!loadingGenres && genres.length > 0 && scrollPosition > 0) {
+      flatListRef.current?.scrollToOffset({
+        offset: scrollPosition,
+        animated: false,
+      });
+    }
+  }, [loadingGenres, genres]);
+
+  const onViewableItemsChanged = useRef(
+    ({viewableItems}: {viewableItems: Array<{item: Genre}>}) => {
+      const ids = viewableItems.map(({item}) => item.id);
+      setVisibleGenreIds(ids);
+    },
+  ).current;
 
   if (loadingGenres) {
     return (
@@ -21,29 +44,31 @@ export const HomeScreen: React.FC = () => {
           title="Welcome to Movie App"
           subtitle="Find your favorite movies here!"
         />
-        <LoadingContainer>
-          <ActivityIndicator
-            testID="loading-indicator"
-            size="large"
-            color="#0000ff"
-          />
-        </LoadingContainer>
+        <ActivityIndicator
+          size="large"
+          color="#0000ff"
+          testID="loading-indicator"
+        />
       </View>
     );
   }
 
   return (
     <FlatList
+      ref={flatListRef}
       data={genres}
       keyExtractor={item => `${item.id}`}
       renderItem={({item}) => (
         <CategorySection
-          genre={item.name}
-          movies={moviesByGenre[item.id] || []}
-          isLoading={loadingByGenre[item.id]}
-          loadMore={() => loadMoreMoviesByGenre(item.id)}
+          genre={item}
+          onClickItem={movie => navigate?.('Detail', {movie})}
+          isVisible={visibleGenreIds.includes(item.id)}
         />
       )}
+      onScrollEndDrag={event => {
+        setScrollPosition(event.nativeEvent.contentOffset.y);
+      }}
+      scrollEventThrottle={20}
       contentContainerStyle={{paddingBottom: 16}}
       ListHeaderComponent={
         <Header
@@ -51,22 +76,8 @@ export const HomeScreen: React.FC = () => {
           subtitle="Find your favorite movies here!"
         />
       }
-      ListFooterComponentStyle={
-        loadingGenres && (
-          <ActivityIndicator
-            size="large"
-            color="#0000ff"
-            style={{marginVertical: 16}}
-          />
-        )
-      }
+      onViewableItemsChanged={onViewableItemsChanged}
+      viewabilityConfig={{itemVisiblePercentThreshold: 50}}
     />
   );
 };
-
-// Estilos
-const LoadingContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;

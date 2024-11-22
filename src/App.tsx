@@ -11,6 +11,7 @@ import {BAISC_THEME} from './styles/theme';
 import {HomeScreen} from './screens/home/HomeScreen';
 import {DetailScreen} from './screens/detail/DetailScreen';
 import {StackNavigator} from './screens/navigation/StackNavigator';
+import {PersistentStateProvider} from './service/PersistentStateContext';
 
 const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,21 +21,23 @@ const App = (): React.JSX.Element => {
   };
 
   return (
-    <ThemeProvider theme={BAISC_THEME}>
-      <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <StackNavigator
-          screens={{
-            Home: HomeScreen,
-            Detail: DetailScreen,
-          }}
-          initialRoute="Home"
-        />
-      </SafeAreaView>
-    </ThemeProvider>
+    <PersistentStateProvider>
+      <ThemeProvider theme={BAISC_THEME}>
+        <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={backgroundStyle.backgroundColor}
+          />
+          <StackNavigator
+            screens={{
+              Home: HomeScreen,
+              Detail: DetailScreen,
+            }}
+            initialRoute="Home"
+          />
+        </SafeAreaView>
+      </ThemeProvider>
+    </PersistentStateProvider>
   );
 };
 

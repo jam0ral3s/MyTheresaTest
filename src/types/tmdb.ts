@@ -11,3 +11,8 @@ export interface Movie {
   overview: string;
   release_date: string;
 }
+
+export interface MovieData {
+  movies: Movie[];
+  total_pages: number;
+}

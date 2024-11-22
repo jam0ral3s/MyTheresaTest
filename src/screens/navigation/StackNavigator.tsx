@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-
-export type Screen = 'Home' | 'Detail';
+import {Screen, ScreenParams, Navigate} from './navigationTypes';
 
 interface StackNavigatorProps {
   screens: {
-    [key in Screen]: React.ComponentType<{navigate: (screen: Screen) => void}>;
+    [key in Screen]: React.ComponentType<{
+      navigate: Navigate;
+      params?: ScreenParams['Home'] | ScreenParams['Detail'];
+    }>;
   };
   initialRoute: Screen;
 }
@@ -15,16 +17,21 @@ export const StackNavigator: React.FC<StackNavigatorProps> = ({
   initialRoute,
 }) => {
   const [currentScreen, setCurrentScreen] = useState<Screen>(initialRoute);
+  const [params, setParams] = useState<ScreenParams[Screen]>();
 
-  const navigate = (screen: Screen) => {
+  const navigate: Navigate = (screen, routeParams) => {
     setCurrentScreen(screen);
+    setParams(routeParams as ScreenParams[Screen]);
   };
 
   const ScreenComponent = screens[currentScreen];
 
   return (
     <View style={styles.container}>
-      <ScreenComponent navigate={navigate} />
+      <ScreenComponent
+        navigate={navigate}
+        params={params as ScreenParams[typeof currentScreen]}
+      />
     </View>
   );
 };

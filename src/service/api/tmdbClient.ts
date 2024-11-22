@@ -8,7 +8,7 @@ const tmdbClient = axios.create({
   },
 });
 
-import {Genre, Movie} from '../../types/tmdb';
+import {Genre, MovieData} from '../../types/tmdb';
 
 export const fetchGenres = async (): Promise<Genre[]> => {
   const response = await tmdbClient.get('/genre/movie/list');
@@ -18,11 +18,15 @@ export const fetchGenres = async (): Promise<Genre[]> => {
 export const fetchMoviesByGenre = async (
   genreId: number,
   page: number = 1,
-): Promise<Movie[]> => {
+): Promise<MovieData> => {
   const response = await tmdbClient.get('/discover/movie', {
-    params: {with_genres: genreId, page: page},
+    params: {
+      with_genres: genreId,
+      page,
+    },
   });
-  return response.data.results;
+  return {
+    movies: response.data.results,
+    total_pages: response.data.total_pages,
+  };
 };
-
-export default tmdbClient;
