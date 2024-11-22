@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
-import {useGetGenres} from '../../hooks/movies/useGetGenres.ts';
+import {useGetGenres} from '../../hooks/useGetGenres.ts';
 import {CategorySection} from './components/CategorySection.tsx';
 import {Header} from '../../components/Header.tsx';
 import {Navigate} from '../navigation/navigationTypes.ts';

@@ -16,7 +16,7 @@ interface StackNavigatorProps {
     }>;
   };
   initialRoute: NavigateRoutes;
-  initialParams: paramsType;
+  initialParams?: paramsType;
 }
 
 type StackNavigation = {

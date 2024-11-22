@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
-import {PersistentStateContext} from '../service/PersistentStateContext';
+import {PersistentStateContext} from '../service/PersistentStateContext.tsx';
 
 export const usePersistentState = <T>(
   key: string,

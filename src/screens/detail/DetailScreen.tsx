@@ -5,8 +5,9 @@ import styled from 'styled-components/native';
 import {Header} from '../../components/Header';
 import {Movie} from '@/types/tmdb';
 import {Navigate} from '../navigation/navigationTypes';
-import {CustomButton} from '../../components/Button';
+
 import {TopBar} from '../../components/TopBar';
+import {FavoriteButton} from './components/FavoriteButton.tsx';
 
 export const DetailScreen = ({
   navigate,
@@ -40,17 +41,11 @@ export const DetailScreen = ({
               </Overview>
             </DescriptionArea>
           </MainContent>
-
           <AdditionalInfo>
             <InfoText>{`⭐ Rating: ${movie.vote_average}`}</InfoText>
             <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
           </AdditionalInfo>
-          <CustomButton
-            title="Add to favorites"
-            onPress={() => {
-              navigate('Home');
-            }}
-          />
+          <FavoriteButton item={movie} />
         </Container>
       </ScrollView>
     </View>

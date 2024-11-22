@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import {MovieCard} from './MovieCard';
 import {Genre, Movie} from '@/types/tmdb';
 import {PlaceholderMovieCard} from './PlaceholderMovieCard';
-import {useMoviesByGenre} from '../../../hooks/movies/useGetMoviesByGenre';
+import {useMoviesByGenre} from '../../../hooks/useGetMoviesByGenre';
 
 interface CategorySectionProps {
   genre: Genre;
