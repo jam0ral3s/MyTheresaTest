@@ -1,7 +1,7 @@
 import React from 'react';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {CategorySection} from '../components/CategorySection';
-import {Genre} from '@/types/tmdb';
+import {Genre} from '../../../types/tmdbType';
 
 jest.mock('../../../hooks/movies/useGetMoviesByGenre.ts', () => ({
   useMoviesByGenre: jest.fn(),

@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useGetGenres} from '../../hooks/useGetGenres.ts';
 import {CategorySection} from './components/CategorySection';

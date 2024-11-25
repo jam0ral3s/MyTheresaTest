@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import {MovieCard} from '../components/MovieCard';
-import {Movie} from '@/types/tmdb';
+import {Movie} from '../../../types/tmdbType';
 
 describe('MovieCard', () => {
   const mockMovie: Movie = {

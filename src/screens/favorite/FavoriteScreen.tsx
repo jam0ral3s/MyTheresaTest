@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {getFavorites} from '../../storage/favoritesStorage';
 import {Movie} from '../../types/tmdbType';

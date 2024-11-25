@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react-native';
+import {render, screen} from '@testing-library/react-native';
 import {HomeScreen} from '../HomeScreen';
 
 jest.mock('../../../hooks/movies/useGetGenres.ts', () => ({
