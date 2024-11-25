@@ -1,7 +1,7 @@
 import React from 'react';
 import {TopBar} from '../../../components/TopBar';
 import {Images} from '../../../styles/images';
-import {Navigate} from '@/screens/navigation/navigationTypes';
+import {Navigate} from '../../../screens/navigation/navigationTypes';
 
 export const HomeTopBar = ({
   navigate,

@@ -3,24 +3,24 @@ import {Dimensions} from 'react-native';
 
 import styled from 'styled-components/native';
 import {Header} from '../../components/Header';
-import {Movie} from '@/types/tmdbType.ts';
 import {Navigate} from '../navigation/navigationTypes';
 
 import {FavoriteButton} from './components/FavoriteButton';
 import {BackTopBar} from './../../components/BackTopBar';
+import {DetailScreenType, DetailStyle} from './detailScreenType.ts';
 
 export const DetailScreen = ({
   navigate,
   params,
 }: {
   navigate: Navigate;
-  params?: {movie: Movie};
+  params?: DetailScreenType;
 }): React.JSX.Element => {
   if (params == null) {
     params;
   }
 
-  const {movie} = params!!;
+  const {movie, style} = params!!;
   const screenHeight = Dimensions.get('window').height;
   const [isScrollable, setIsScrollable] = useState(false);
   const handleContentSizeChange = (_: number, contentHeight: number) => {
@@ -33,8 +33,8 @@ export const DetailScreen = ({
       <ScrollView
         scrollEnabled={isScrollable}
         onContentSizeChange={handleContentSizeChange}>
+        <Header title={movie.title} />
         <Container>
-          <Header title={movie.title} />
           <MainContent>
             <ImageArea>
               <Poster
@@ -53,11 +53,22 @@ export const DetailScreen = ({
             <InfoText>{`⭐ Rating: ${movie.vote_average}`}</InfoText>
             <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
           </AdditionalInfo>
-          <FavoriteButton item={movie} />
+          <FavoriteButton item={movie} color={getFavoriteColor(style)} />
         </Container>
       </ScrollView>
     </ScreenContainer>
   );
+};
+
+const getFavoriteColor = (style: DetailStyle) => {
+  let color = '#8c1025';
+  if (style == DetailStyle.SECOND) {
+    color = '#10258c';
+  } else if (style == DetailStyle.THIRD) {
+    color = '#ffc107';
+  }
+
+  return color;
 };
 
 const ScreenContainer = styled.View`
@@ -66,7 +77,8 @@ const ScreenContainer = styled.View`
 
 const ScrollView = styled.ScrollView`
   width: 100%;
-  padding: 20px;
+  padding-start: 20px;
+  padding-end: 20px;
 `;
 
 const Container = styled.View`

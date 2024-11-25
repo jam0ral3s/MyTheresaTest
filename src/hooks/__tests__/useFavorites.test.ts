@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react';
 import {useFavorites} from '../../hooks/useFavorites';
-import {Movie} from '@/types/tmdbType';
+import {Movie} from '../../types/tmdbType';
 
 jest.mock('../../storage/favoritesStorage.ts', () => ({
   getFavorites: jest.fn(() => Promise.resolve([])),

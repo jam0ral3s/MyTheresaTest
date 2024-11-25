@@ -7,6 +7,7 @@ import {Navigate} from '../navigation/navigationTypes.ts';
 import {Genre} from '../../types/tmdbType.ts';
 import {usePersistentState} from '../../hooks/usePersistentState.ts';
 import {HomeTopBar} from './components/HomeTopBar';
+import {DetailStyle} from '../detail/detailScreenType.ts';
 
 export const HomeScreen = ({
   navigate,
@@ -61,6 +62,7 @@ export const HomeScreen = ({
     );
   }
 
+  const enumStyles = Object.keys(DetailStyle).filter(v => isNaN(Number(v)));
   return (
     <View>
       <HomeTopBar navigate={navigate} />
@@ -69,13 +71,23 @@ export const HomeScreen = ({
         ref={flatListRef}
         data={genres}
         keyExtractor={item => `${item.id}`}
-        renderItem={({item}) => (
-          <CategorySection
-            genre={item}
-            onClickItem={movie => navigate?.('Detail', {movie})}
-            isVisible={visibleGenreIds.includes(item.id)}
-          />
-        )}
+        renderItem={({item, index}) => {
+          const styleString = enumStyles[
+            index % enumStyles.length
+          ] as keyof typeof DetailStyle;
+          return (
+            <CategorySection
+              genre={item}
+              onClickItem={movie =>
+                navigate?.('Detail', {
+                  movie: movie,
+                  style: DetailStyle[styleString],
+                })
+              }
+              isVisible={visibleGenreIds.includes(item.id)}
+            />
+          );
+        }}
         onScrollEndDrag={event => {
           setScrollPosition(event.nativeEvent.contentOffset.y);
         }}

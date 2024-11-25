@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {MovieCard} from './MovieCard';
-import {Genre, Movie} from '@/types/tmdb';
+import {Genre, Movie} from '../../../types/tmdbType';
 import {PlaceholderMovieCard} from './PlaceholderMovieCard';
 import {useMoviesByGenre} from '../../../hooks/useGetMoviesByGenre';
 

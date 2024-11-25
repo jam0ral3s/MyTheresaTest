@@ -1,4 +1,4 @@
-import {Movie} from '@/types/tmdbType';
+import {DetailScreenType} from '../detail/detailScreenType';
 
 export type Screen = 'Home' | 'Detail' | 'Favorite';
 export type NavigateActions = 'back';
@@ -6,7 +6,7 @@ export type NavigateRoutes = Screen | NavigateActions;
 
 export type RouteParams = {
   Home: undefined;
-  Detail: {movie: Movie};
+  Detail: DetailScreenType;
   Favorite: undefined;
   back: undefined;
 };
