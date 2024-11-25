@@ -1,20 +1,29 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
-import {TopbarAction} from '../types/topbarActionType';
 import {Images} from '../styles/images';
+import {FlatList, ImageSourcePropType} from 'react-native';
+
+type TopbarAction = {
+  icon?: ImageSourcePropType;
+  text?: string;
+  onPress: () => void;
+};
+
+type TopbarProps = {
+  showBackButton: boolean;
+  onBackPress?: () => void;
+  topbarActions?: TopbarAction[];
+};
 
 export const TopBar = ({
   showBackButton,
   onBackPress,
   topbarActions = [],
-}: {
-  showBackButton: boolean;
-  onBackPress?: () => void;
-  topbarActions?: TopbarAction[];
-}) => {
+}: TopbarProps) => {
   return (
     <Container>
-      {showBackButton && (
+      {showBackButton ? (
         <BackButton onPress={onBackPress}>
           <StyledImage
             source={Images.back}
@@ -22,20 +31,24 @@ export const TopBar = ({
             resizeMode="contain"
           />
         </BackButton>
-      )}
+      ) : null}
       <Spacer />
       <ActionsContainer>
-        {topbarActions.map((action, index) => (
-          <ActionButton key={index} onPress={action.onPress}>
-            {action.icon && (
-              <StyledImage
-                source={action.icon}
-                accessibilityLabel={action.text}
-                resizeMode="contain"
-              />
-            )}
-          </ActionButton>
-        ))}
+        <FlatList
+          horizontal={true}
+          data={topbarActions}
+          renderItem={({item, index}) => (
+            <ActionButton key={index} onPress={item.onPress}>
+              {item.icon ? (
+                <StyledImage
+                  source={item.icon}
+                  accessibilityLabel={item.text}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </ActionButton>
+          )}
+        />
       </ActionsContainer>
     </Container>
   );
@@ -44,12 +57,11 @@ export const TopBar = ({
 const Container = styled.View`
   height: 40px;
   flex-direction: row;
+  margin-top: ${Platform.OS === 'ios' ? '0px' : '30px'};
   align-items: center;
   justify-content: space-between;
-  background-color: #ececec;
+  background-color: ${props => props.theme.color.basic.background};
   padding: 0 10px;
-  border-bottom-width: 1px;
-  border-bottom-color: #ececec;
 `;
 
 const BackButton = styled.TouchableOpacity`
@@ -61,14 +73,15 @@ const Spacer = styled.View`
 `;
 
 const ActionsContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;
 
 const ActionButton = styled.TouchableOpacity`
   height: 20px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   margin-left: 10px;
 `;
 

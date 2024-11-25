@@ -1,4 +1,4 @@
-import {BASIC_COLORS, ColorTheme} from './colors';
+import {ColorTheme, DARK_COLORS, LIGHT_COLORS} from './colors';
 import {BASIC_FONTS, FontTheme} from './font';
 import {BASIC_SIZES, DefaultSizes} from './sizes';
 
@@ -8,8 +8,14 @@ export type CustomTheme = {
   font: FontTheme;
 };
 
-export const BAISC_THEME: CustomTheme = {
-  color: BASIC_COLORS,
+export const LIGHT_THEME: CustomTheme = {
+  color: LIGHT_COLORS,
+  size: BASIC_SIZES,
+  font: BASIC_FONTS,
+};
+
+export const DARK_THEME: CustomTheme = {
+  color: DARK_COLORS,
   size: BASIC_SIZES,
   font: BASIC_FONTS,
 };

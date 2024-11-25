@@ -21,22 +21,28 @@ export const FavoriteScreen = ({
     };
     fetchFavorites();
   }, []);
+  const renderItem = ({item}: {item: Movie}) => {
+    const formattedRating =
+      typeof item.vote_average === 'number'
+        ? `⭐ ${item.vote_average.toFixed(1)}`
+        : null;
 
-  const renderItem = ({item}: {item: Movie}) => (
-    <TouchableContent onPress={() => navigate('Detail', {movie: item})}>
-      <CardContainer>
-        <Poster
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-          }}
-        />
-        <InfoContainer>
-          <Title>{item.title}</Title>
-          <Rating>{`⭐ ${item.vote_average}`}</Rating>
-        </InfoContainer>
-      </CardContainer>
-    </TouchableContent>
-  );
+    return (
+      <TouchableContent onPress={() => navigate('Detail', {movie: item})}>
+        <CardContainer>
+          <Poster
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            }}
+          />
+          <InfoContainer>
+            <Title>{item.title}</Title>
+            <Rating>{`${formattedRating}`}</Rating>
+          </InfoContainer>
+        </CardContainer>
+      </TouchableContent>
+    );
+  };
 
   return (
     <Container>
@@ -63,9 +69,7 @@ const CardContainer = styled.View`
   flex-direction: row;
   padding: 10px 10px;
   align-items: center;
-
-  background-color: white;
-
+  background-color: ${props => props.theme.color.basic.foreground};
   border-radius: 8px;
 `;
 
@@ -85,11 +89,12 @@ const Title = styled.Text`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 4px;
+  color: ${props => props.theme.color.basic.text};
 `;
 
 const Rating = styled.Text`
   font-size: 16px;
-  color: #757575;
+  color: ${props => props.theme.color.basic.text};
 `;
 
 const EmptyText = styled.Text`

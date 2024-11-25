@@ -42,7 +42,7 @@ const CardContainer = styled.View`
   margin: 0 8px;
   align-items: center;
   justify-content: space-between;
-  background-color: white;
+  background-color: ${props => props.theme.color.basic.foreground};
   padding: 10px;
   border-radius: 8px;
 `;
@@ -66,6 +66,7 @@ const MovieTitle = styled.Text`
   line-height: 18px;
   width: 120px;
   height: 40px;
+  color: ${props => props.theme.color.basic.text};
   text-align: left;
 `;
 
@@ -73,6 +74,7 @@ const MovieRating = styled.Text`
   font-size: 12px;
   color: #888;
   width: 120px;
+  color: ${props => props.theme.color.basic.text};
   text-align: left;
   margin-top: 4px;
 `;

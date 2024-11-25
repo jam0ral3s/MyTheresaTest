@@ -1,13 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, ActivityIndicator, FlatList} from 'react-native';
-import {useGetGenres} from '../../hooks/useGetGenres.ts';
+import {ActivityIndicator, FlatList} from 'react-native';
 import {CategorySection} from './components/CategorySection';
 import {Header} from '../../components/Header';
-import {Navigate} from '../navigation/navigationTypes.ts';
-import {Genre} from '../../types/tmdbType.ts';
-import {usePersistentState} from '../../hooks/usePersistentState.ts';
+import {Navigate} from '../navigation/navigationTypes';
+import {Genre} from '../../types/tmdbType';
 import {HomeTopBar} from './components/HomeTopBar';
-import {DetailStyle} from '../detail/detailScreenType.ts';
+import {DetailStyle} from '../detail/detailScreenType';
+import styled from 'styled-components/native';
+import {useGenreContext} from '../../service/GenreProvider';
+import {useScrollPosition} from '../../service/ScrollPositionProvider';
 
 export const HomeScreen = ({
   navigate,
@@ -15,13 +16,10 @@ export const HomeScreen = ({
   navigate?: Navigate;
 }): React.JSX.Element => {
   const flatListRef = useRef<FlatList>(null);
-  const [scrollPosition, setScrollPosition] = usePersistentState<number>(
-    'HomeScrollPosition',
-    0,
-  );
   const [flatListRendered, setFlatListRendered] = useState<boolean>(false);
 
-  const {loadingGenres, genres} = useGetGenres();
+  const {loadingGenres, genres} = useGenreContext();
+  const {scrollPosition, setScrollPosition} = useScrollPosition();
   const [visibleGenreIds, setVisibleGenreIds] = useState<number[]>([]);
 
   useEffect(() => {
@@ -62,18 +60,20 @@ export const HomeScreen = ({
     );
   }
 
-  const enumStyles = Object.keys(DetailStyle).filter(v => isNaN(Number(v)));
+  const detailEnumStyles = Object.keys(DetailStyle).filter(v =>
+    isNaN(Number(v)),
+  );
+
   return (
     <View>
       <HomeTopBar navigate={navigate} />
       <FlatList
-        style={{backgroundColor: '#ECECEC'}}
         ref={flatListRef}
         data={genres}
         keyExtractor={item => `${item.id}`}
         renderItem={({item, index}) => {
-          const styleString = enumStyles[
-            index % enumStyles.length
+          const styleString = detailEnumStyles[
+            index % detailEnumStyles.length
           ] as keyof typeof DetailStyle;
           return (
             <CategorySection
@@ -106,3 +106,9 @@ export const HomeScreen = ({
     </View>
   );
 };
+
+const View = styled.View`
+  background-color: ${props => {
+    return props.theme.color.basic.background;
+  }};
+`;

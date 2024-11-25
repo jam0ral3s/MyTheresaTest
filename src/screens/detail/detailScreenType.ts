@@ -6,7 +6,7 @@ export enum DetailStyle {
   THIRD,
 }
 
-export type DetailScreenType = {
+export type DetailScreenParams = {
   movie: Movie;
-  style: DetailStyle;
+  style?: DetailStyle;
 };

@@ -1,4 +1,4 @@
-import {DetailScreenType} from '../detail/detailScreenType';
+import {DetailScreenParams} from '../detail/detailScreenType';
 
 export type Screen = 'Home' | 'Detail' | 'Favorite';
 export type NavigateActions = 'back';
@@ -6,7 +6,7 @@ export type NavigateRoutes = Screen | NavigateActions;
 
 export type RouteParams = {
   Home: undefined;
-  Detail: DetailScreenType;
+  Detail: DetailScreenParams;
   Favorite: undefined;
   back: undefined;
 };

@@ -1,44 +1,42 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {StatusBar, useColorScheme} from 'react-native';
+import {StatusBar} from 'react-native';
 
 import {ThemeProvider} from 'styled-components/native';
-import {BAISC_THEME} from './styles/theme';
+import {LIGHT_THEME, DARK_THEME, CustomTheme} from './styles/theme';
 import {HomeScreen} from './screens/home/HomeScreen';
 import {DetailScreen} from './screens/detail/DetailScreen';
 import {StackNavigator} from './screens/navigation/StackNavigator';
-import {PersistentStateProvider} from './service/PersistentStateContext';
 import {FavoriteScreen} from './screens/favorite/FavoriteScreen';
+import {DarkModeProvider, useDarkMode} from './service/DarkModeProvider';
 
 const App = (): React.JSX.Element => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#ececec' : '#ececec',
-  };
+  const {isDarkMode} = useDarkMode();
+  const theme = isDarkMode ? LIGHT_THEME : DARK_THEME;
 
   return (
-    <PersistentStateProvider>
-      <ThemeProvider theme={BAISC_THEME}>
-        <SafeAreaView
-          style={{backgroundColor: backgroundStyle.backgroundColor}}>
-          <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
-          <StackNavigator
-            screens={{
-              Home: HomeScreen,
-              Detail: DetailScreen,
-              Favorite: FavoriteScreen,
-            }}
-            initialRoute="Home"
-          />
-        </SafeAreaView>
-      </ThemeProvider>
-    </PersistentStateProvider>
+    <ThemeProvider theme={theme}>
+      <SafeAreaView>
+        <StatusBar
+          barStyle={theme === DARK_THEME ? 'light-content' : 'dark-content'}
+          backgroundColor={theme.color.basic.background}
+        />
+        <StackNavigator
+          screens={{
+            Home: HomeScreen,
+            Detail: DetailScreen,
+            Favorite: FavoriteScreen,
+          }}
+          initialRoute="Home"
+        />
+      </SafeAreaView>
+    </ThemeProvider>
   );
 };
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
+  background-color: ${props => props.theme.color.basic.background};
 `;
 
 export default App;

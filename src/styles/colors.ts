@@ -1,24 +1,40 @@
 export type ColorTheme = {
+  name: string;
   basic: {
-    normal: string;
+    text: string;
     bold: string;
     border: string;
-    background: {primary: string; secondary: string};
+    background: string;
+    foreground: string;
   };
 };
 
 export const COLORS = {
+  BLACK: '#000000',
   WHITE: '#FFFFFF',
-  GRAY: '#000000',
-  DARK_GRAY: '#1D2026',
-  LIGHT_GRAY: '#D7DCE4',
+  GRAY: '#2E2C30',
+  LIGHT_GRAY: '#ececec',
+  DARK_GRAY: '#232223',
 };
 
-export const BASIC_COLORS: ColorTheme = {
+export const LIGHT_COLORS: ColorTheme = {
+  name: 'light',
   basic: {
-    normal: COLORS.GRAY,
+    text: COLORS.BLACK,
     bold: COLORS.DARK_GRAY,
     border: COLORS.LIGHT_GRAY,
-    background: {primary: COLORS.WHITE, secondary: COLORS.GRAY},
+    background: COLORS.LIGHT_GRAY,
+    foreground: COLORS.WHITE,
+  },
+};
+
+export const DARK_COLORS: ColorTheme = {
+  name: 'dark',
+  basic: {
+    text: COLORS.WHITE,
+    bold: COLORS.LIGHT_GRAY,
+    border: COLORS.GRAY,
+    background: COLORS.DARK_GRAY,
+    foreground: COLORS.GRAY,
   },
 };

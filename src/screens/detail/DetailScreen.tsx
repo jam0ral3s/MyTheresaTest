@@ -7,14 +7,15 @@ import {Navigate} from '../navigation/navigationTypes';
 
 import {FavoriteButton} from './components/FavoriteButton';
 import {BackTopBar} from './../../components/BackTopBar';
-import {DetailScreenType, DetailStyle} from './detailScreenType.ts';
+import {DetailScreenParams, DetailStyle} from './detailScreenType';
+import {BASIC_FONTS, FontDetails, FontTheme} from '../../styles/font';
 
 export const DetailScreen = ({
   navigate,
   params,
 }: {
   navigate: Navigate;
-  params?: DetailScreenType;
+  params?: DetailScreenParams;
 }): React.JSX.Element => {
   if (params == null) {
     params;
@@ -26,6 +27,11 @@ export const DetailScreen = ({
   const handleContentSizeChange = (_: number, contentHeight: number) => {
     setIsScrollable(contentHeight > screenHeight);
   };
+
+  const formattedRating =
+    typeof movie.vote_average === 'number'
+      ? `⭐ ${movie.vote_average.toFixed(1)}`
+      : null;
 
   return (
     <ScreenContainer>
@@ -44,13 +50,13 @@ export const DetailScreen = ({
               />
             </ImageArea>
             <DescriptionArea>
-              <Overview>
+              <Overview style={style || DetailStyle.FIRST}>
                 {movie.overview || 'No description available.'}
               </Overview>
             </DescriptionArea>
           </MainContent>
           <AdditionalInfo>
-            <InfoText>{`⭐ Rating: ${movie.vote_average}`}</InfoText>
+            <InfoText>{`${formattedRating}`}</InfoText>
             <InfoText>{`Release Date: ${movie.release_date}`}</InfoText>
           </AdditionalInfo>
           <FavoriteButton item={movie} color={getFavoriteColor(style)} />
@@ -60,7 +66,7 @@ export const DetailScreen = ({
   );
 };
 
-const getFavoriteColor = (style: DetailStyle) => {
+const getFavoriteColor = (style: DetailStyle = DetailStyle.FIRST): string => {
   let color = '#8c1025';
   if (style == DetailStyle.SECOND) {
     color = '#10258c';
@@ -71,26 +77,48 @@ const getFavoriteColor = (style: DetailStyle) => {
   return color;
 };
 
+const getFontFamily = (style: DetailStyle = DetailStyle.FIRST): FontDetails => {
+  let font = BASIC_FONTS.regular16;
+  if (style == DetailStyle.SECOND) {
+    font = BASIC_FONTS.serif18;
+  } else if (style == DetailStyle.THIRD) {
+    font = BASIC_FONTS.monospace16;
+  }
+
+  return font;
+};
+
 const ScreenContainer = styled.View`
-  width: 100%;
+  flex: 1;
 `;
 
 const ScrollView = styled.ScrollView`
   width: 100%;
-  padding-start: 20px;
-  padding-end: 20px;
+  padding-start: ${props => props.theme.size.spacing.l}px;
+  padding-end: ${props => props.theme.size.spacing.l}px;
+  background-color: ${props => props.theme.color.basic.background};
 `;
 
 const Container = styled.View`
-  padding-start: 16px;
-  padding-end: 16px;
-  flex: 1;
-  width: 100%;
-  justify-content: center;
-  background-color: white;
-  padding: 30px;
+  padding: ${props => props.theme.size.spacing.l}px;
+  background-color: ${props => props.theme.color.basic.foreground};
   border-radius: 8px;
   margin-bottom: 80px;
+`;
+
+const Overview = styled.Text<{style: DetailStyle}>`
+  line-height: ${props => props.theme.font.regular16.lineHeight}px;
+  color: ${props => props.theme.color.basic.text};
+  font-family: ${({style}) => getFontFamily(style).fontFamily};
+  font-size: ${({style}) => {
+    return getFontFamily(style).fontSize;
+  }}px;
+`;
+
+const InfoText = styled.Text`
+  font-size: ${props => props.theme.font.regular16.fontSize}px;
+  margin-bottom: 4px;
+  color: ${props => props.theme.color.basic.text};
 `;
 
 const MainContent = styled.View`
@@ -117,17 +145,6 @@ const DescriptionArea = styled.View`
   margin-bottom: 16px;
 `;
 
-const Overview = styled.Text`
-  font-size: 14px;
-  margin-bottom: 8px;
-  line-height: 20px;
-`;
-
 const AdditionalInfo = styled.View`
   margin-top: 16px;
-`;
-
-const InfoText = styled.Text`
-  font-size: 14px;
-  margin-bottom: 4px;
 `;

@@ -11,7 +11,7 @@ export const Header: React.FC<HeaderProps> = ({title, subtitle}) => {
     <HeaderContainer>
       <HeaderContent>
         <HeaderTitle>{title}</HeaderTitle>
-        {subtitle && <HeaderSubtitle>{subtitle}</HeaderSubtitle>}
+        {subtitle ? <HeaderSubtitle>{subtitle}</HeaderSubtitle> : null}
       </HeaderContent>
     </HeaderContainer>
   );
@@ -32,10 +32,12 @@ const HeaderTitle = styled.Text`
   font-size: 28px;
   font-weight: bold;
   text-align: center;
+  color: ${props => props.theme.color.basic.text};
 `;
 
 const HeaderSubtitle = styled.Text`
   font-size: 16px;
   text-align: center;
   margin-top: 8px;
+  color: ${props => props.theme.color.basic.text};
 `;

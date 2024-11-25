@@ -21,6 +21,7 @@ export const useFavorites = () => {
     await saveFavorites(newFavorites);
   };
 
+  // Delete
   const removeFavorite = async (movie: Movie) => {
     const newFavorites = favorites.filter(item => {
       return item.id !== movie.id;
