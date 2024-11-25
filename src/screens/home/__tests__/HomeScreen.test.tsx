@@ -2,11 +2,11 @@ import React from 'react';
 import {render, screen} from '@testing-library/react-native';
 import {HomeScreen} from '../HomeScreen';
 
-jest.mock('../../../hooks/movies/useGetGenres.ts', () => ({
+jest.mock('../../../hooks/useGetGenres.ts', () => ({
   useGetGenres: jest.fn(),
 }));
 
-const {useGetGenres} = require('../../../hooks/movies/useGetGenres.ts');
+const {useGetGenres} = require('../../../hooks/useGetGenres.ts');
 
 describe('HomeScreen', () => {
   it('muestra el indicador de carga al inicio', () => {

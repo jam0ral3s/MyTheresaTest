@@ -3,13 +3,11 @@ import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {CategorySection} from '../components/CategorySection';
 import {Genre} from '../../../types/tmdbType';
 
-jest.mock('../../../hooks/movies/useGetMoviesByGenre.ts', () => ({
+jest.mock('../../../hooks/useGetMoviesByGenre.ts', () => ({
   useMoviesByGenre: jest.fn(),
 }));
 
-const {
-  useMoviesByGenre,
-} = require('../../../hooks/movies/useGetMoviesByGenre.ts');
+const {useMoviesByGenre} = require('../../../hooks/useGetMoviesByGenre.ts');
 
 describe('CategorySection', () => {
   it('correctly renders title and movies', () => {
