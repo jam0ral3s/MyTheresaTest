@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {fetchMoviesByGenre} from '../service/api/tmdbClient.ts';
-import {Movie, MovieData} from '../types/tmdb.ts';
+import {Movie, MovieData} from '../types/tmdbType.ts';
 
 export const useMoviesByGenre = (genreId: number) => {
   const [movies, setMovies] = useState<Movie[] | null>(null);

@@ -1,4 +1,4 @@
-import {Movie} from '@/types/tmdb';
+import {Movie} from '../../../types/tmdbType';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
@@ -15,7 +15,8 @@ export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
       : null;
 
   return (
-    <CardContainer>
+    <CardContainer
+      style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
       <TouchableOpacity
         onPress={() => onPress?.(movie)}
         accessible
@@ -42,7 +43,7 @@ const CardContainer = styled.View`
   margin: 0 8px;
   align-items: center;
   justify-content: space-between;
-  width: 120px;
+  width: 140px;
 `;
 
 const MoviePoster = styled.Image`
@@ -59,16 +60,16 @@ const MovieDetails = styled.View`
 
 const MovieTitle = styled.Text`
   margin-top: 8px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   width: 120px;
-  font-weight: bold;
-  text-align: center;
+  text-align: left;
 `;
 
 const MovieRating = styled.Text`
   font-size: 12px;
   color: #888;
-  text-align: center;
+  width: 120px;
+  text-align: left;
   margin-top: 4px;
 `;

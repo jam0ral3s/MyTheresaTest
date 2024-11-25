@@ -3,11 +3,11 @@ import {ScrollView, View} from 'react-native';
 
 import styled from 'styled-components/native';
 import {Header} from '../../components/Header';
-import {Movie} from '@/types/tmdb';
+import {Movie} from '@/types/tmdbType.ts';
 import {Navigate} from '../navigation/navigationTypes';
 
-import {TopBar} from '../../components/TopBar';
 import {FavoriteButton} from './components/FavoriteButton.tsx';
+import {DetailTopBar} from './components/DetailTopBar.tsx';
 
 export const DetailScreen = ({
   navigate,
@@ -23,7 +23,7 @@ export const DetailScreen = ({
   const {movie} = params!!;
   return (
     <View style={{width: '100%'}}>
-      <TopBar showBackButton={true} onBackPress={() => navigate?.('back')} />
+      <DetailTopBar onBackPress={() => navigate?.('back')} />
       <ScrollView style={{width: '100%'}}>
         <Container style={{marginBottom: 80}}>
           <Header title={movie.title} />

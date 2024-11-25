@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {getFavorites, saveFavorites} from '../storage/favoritesStorage.ts';
-import {Movie} from '@/types/tmdb.ts';
+import {Movie} from '@/types/tmdbType.ts';
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState<Movie[]>([]);

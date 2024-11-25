@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {fetchGenres} from '../service/api/tmdbClient.ts';
-import {Genre} from '../types/tmdb.ts';
+import {Genre} from '../types/tmdbType.ts';
 import {usePersistentState} from '../hooks/usePersistentState.ts';
 
 export const useGetGenres = () => {

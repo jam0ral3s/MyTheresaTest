@@ -75,7 +75,8 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 20px;
+  font-size: 24px;
+  color: #555555;
   font-weight: bold;
   margin-left: 16px;
   margin-bottom: 8px;

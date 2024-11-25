@@ -8,7 +8,7 @@ const tmdbClient = axios.create({
   },
 });
 
-import {Genre, MovieData} from '../../types/tmdb';
+import {Genre, MovieData} from '../../types/tmdbType';
 
 export const fetchGenres = async (): Promise<Genre[]> => {
   const response = await tmdbClient.get('/genre/movie/list');

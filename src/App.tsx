@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import styled from 'styled-components/native';
+import {StatusBar, useColorScheme} from 'react-native';
 
 import {ThemeProvider} from 'styled-components/native';
 import {BAISC_THEME} from './styles/theme';
@@ -17,17 +13,15 @@ const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#000' : '#fff',
+    backgroundColor: isDarkMode ? '#ececec' : '#ececec',
   };
 
   return (
     <PersistentStateProvider>
       <ThemeProvider theme={BAISC_THEME}>
-        <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          />
+        <SafeAreaView
+          style={{backgroundColor: backgroundStyle.backgroundColor}}>
+          <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
           <StackNavigator
             screens={{
               Home: HomeScreen,
@@ -41,10 +35,8 @@ const App = (): React.JSX.Element => {
   );
 };
 
-const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
-  },
-});
+const SafeAreaView = styled.SafeAreaView`
+  flex: 1;
+`;
 
 export default App;

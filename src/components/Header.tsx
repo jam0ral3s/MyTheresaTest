@@ -18,9 +18,10 @@ export const Header: React.FC<HeaderProps> = ({title, subtitle}) => {
 };
 
 const HeaderContainer = styled.View`
-  height: 120px;
+  margin-top: 4px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 16px;
 `;
 
 const HeaderContent = styled.View`
