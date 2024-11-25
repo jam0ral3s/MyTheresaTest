@@ -1,8 +1,13 @@
 import React from 'react';
 import {TopBar} from '../../../components/TopBar';
 import {Images} from '../../../styles/images';
+import {Navigate} from '@/screens/navigation/navigationTypes';
 
-export const HomeTopBar = (): React.JSX.Element => {
+export const HomeTopBar = ({
+  navigate,
+}: {
+  navigate?: Navigate;
+}): React.JSX.Element => {
   return (
     <TopBar
       showBackButton={false}
@@ -10,7 +15,9 @@ export const HomeTopBar = (): React.JSX.Element => {
         {
           icon: Images.favorite,
           text: 'Favorite',
-          onPress: () => console.log('Action Pressed'),
+          onPress: () => {
+            navigate?.('Favorite');
+          },
         },
       ]}
     />

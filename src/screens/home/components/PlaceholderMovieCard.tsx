@@ -14,10 +14,10 @@ export const PlaceholderMovieCard: React.FC = () => {
 };
 
 const CardContainer = styled.View`
-  margin: 0 8px;
+  margin: 0 10px;
   align-items: center;
   justify-content: space-between;
-  width: 120px;
+  width: 140px;
 `;
 
 const MoviePosterPlaceholder = styled.View`
@@ -28,8 +28,8 @@ const MoviePosterPlaceholder = styled.View`
 `;
 
 const MovieDetails = styled.View`
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
   margin-top: 2px;
 `;
 

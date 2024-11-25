@@ -1,7 +1,7 @@
 import React from 'react';
-import {TopBar} from '../../../components/TopBar';
+import {TopBar} from '../components/TopBar';
 
-export const DetailTopBar = ({
+export const BackTopBar = ({
   onBackPress,
 }: {
   onBackPress?: () => void;

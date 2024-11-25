@@ -8,6 +8,7 @@ import {HomeScreen} from './screens/home/HomeScreen';
 import {DetailScreen} from './screens/detail/DetailScreen';
 import {StackNavigator} from './screens/navigation/StackNavigator';
 import {PersistentStateProvider} from './service/PersistentStateContext';
+import {FavoriteScreen} from './screens/favorite/FavoriteScreen';
 
 const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,6 +27,7 @@ const App = (): React.JSX.Element => {
             screens={{
               Home: HomeScreen,
               Detail: DetailScreen,
+              Favorite: FavoriteScreen,
             }}
             initialRoute="Home"
           />

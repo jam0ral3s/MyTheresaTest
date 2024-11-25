@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, ActivityIndicator, FlatList, Text} from 'react-native';
+
+import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useGetGenres} from '../../hooks/useGetGenres.ts';
-import {CategorySection} from './components/CategorySection.tsx';
-import {Header} from '../../components/Header.tsx';
+import {CategorySection} from './components/CategorySection';
+import {Header} from '../../components/Header';
 import {Navigate} from '../navigation/navigationTypes.ts';
 import {Genre} from '../../types/tmdbType.ts';
 import {usePersistentState} from '../../hooks/usePersistentState.ts';
-import {HomeTopBar} from './components/HomeTopBar.tsx';
+import {HomeTopBar} from './components/HomeTopBar';
 
 export const HomeScreen = ({
   navigate,
@@ -63,7 +64,7 @@ export const HomeScreen = ({
 
   return (
     <View>
-      <HomeTopBar />
+      <HomeTopBar navigate={navigate} />
       <FlatList
         style={{backgroundColor: '#ECECEC'}}
         ref={flatListRef}

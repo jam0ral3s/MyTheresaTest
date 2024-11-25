@@ -19,8 +19,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
       onPress={() => onPress?.(movie)}
       accessible
       accessibilityRole="button">
-      <CardContainer
-        style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
+      <CardContainer>
         <MoviePoster
           accessibilityRole="image"
           accessible
@@ -43,11 +42,15 @@ const CardContainer = styled.View`
   margin: 0 8px;
   align-items: center;
   justify-content: space-between;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
 `;
 
 const MoviePoster = styled.Image`
   width: 120px;
   height: 180px;
+  aspect-ratio: 2 / 3;
   border-radius: 8px;
 `;
 

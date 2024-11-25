@@ -1,4 +1,4 @@
-import {Movie} from '@/types/tmdb';
+import {Movie} from '../types/tmdbType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FAVORITES_KEY = 'favorites';

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions} from 'react-native';
 
 import styled from 'styled-components/native';
 import {Header} from '../../components/Header';
 import {Movie} from '@/types/tmdbType.ts';
 import {Navigate} from '../navigation/navigationTypes';
 
-import {FavoriteButton} from './components/FavoriteButton.tsx';
-import {DetailTopBar} from './components/DetailTopBar.tsx';
+import {FavoriteButton} from './components/FavoriteButton';
+import {BackTopBar} from './../../components/BackTopBar';
 
 export const DetailScreen = ({
   navigate,
@@ -28,13 +28,12 @@ export const DetailScreen = ({
   };
 
   return (
-    <View style={{width: '100%'}}>
-      <DetailTopBar onBackPress={() => navigate?.('back')} />
+    <ScreenContainer>
+      <BackTopBar onBackPress={() => navigate?.('back')} />
       <ScrollView
-        style={{width: '100%'}}
         scrollEnabled={isScrollable}
         onContentSizeChange={handleContentSizeChange}>
-        <Container style={{marginBottom: 80}}>
+        <Container>
           <Header title={movie.title} />
           <MainContent>
             <ImageArea>
@@ -57,15 +56,29 @@ export const DetailScreen = ({
           <FavoriteButton item={movie} />
         </Container>
       </ScrollView>
-    </View>
+    </ScreenContainer>
   );
 };
+
+const ScreenContainer = styled.View`
+  width: 100%;
+`;
+
+const ScrollView = styled.ScrollView`
+  width: 100%;
+  padding: 20px;
+`;
 
 const Container = styled.View`
   padding-start: 16px;
   padding-end: 16px;
   flex: 1;
   width: 100%;
+  justify-content: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 80px;
 `;
 
 const MainContent = styled.View`
