@@ -38,9 +38,9 @@ const Container = styled.View`
 
 const Button = styled.TouchableOpacity`
   background-color: #8c1025;
-  padding: 10px 20px;
+  padding: 15px 40px;
   align-self: center;
-  border-radius: 5px;
+  border-radius: 24px;
 `;
 
 const ButtonText = styled.Text`

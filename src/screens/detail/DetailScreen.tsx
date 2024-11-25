@@ -1,5 +1,5 @@
-import React from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useState} from 'react';
+import {Dimensions, ScrollView, View} from 'react-native';
 
 import styled from 'styled-components/native';
 import {Header} from '../../components/Header';
@@ -21,10 +21,19 @@ export const DetailScreen = ({
   }
 
   const {movie} = params!!;
+  const screenHeight = Dimensions.get('window').height;
+  const [isScrollable, setIsScrollable] = useState(false);
+  const handleContentSizeChange = (_: number, contentHeight: number) => {
+    setIsScrollable(contentHeight > screenHeight);
+  };
+
   return (
     <View style={{width: '100%'}}>
       <DetailTopBar onBackPress={() => navigate?.('back')} />
-      <ScrollView style={{width: '100%'}}>
+      <ScrollView
+        style={{width: '100%'}}
+        scrollEnabled={isScrollable}
+        onContentSizeChange={handleContentSizeChange}>
         <Container style={{marginBottom: 80}}>
           <Header title={movie.title} />
           <MainContent>

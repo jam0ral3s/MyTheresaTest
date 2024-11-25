@@ -15,12 +15,12 @@ export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
       : null;
 
   return (
-    <CardContainer
-      style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
-      <TouchableOpacity
-        onPress={() => onPress?.(movie)}
-        accessible
-        accessibilityRole="button">
+    <TouchableOpacity
+      onPress={() => onPress?.(movie)}
+      accessible
+      accessibilityRole="button">
+      <CardContainer
+        style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
         <MoviePoster
           accessibilityRole="image"
           accessible
@@ -34,8 +34,8 @@ export const MovieCard: React.FC<MovieCardProps> = ({movie, onPress}) => {
           </MovieTitle>
           {formattedRating && <MovieRating>{formattedRating}</MovieRating>}
         </MovieDetails>
-      </TouchableOpacity>
-    </CardContainer>
+      </CardContainer>
+    </TouchableOpacity>
   );
 };
 
@@ -43,7 +43,6 @@ const CardContainer = styled.View`
   margin: 0 8px;
   align-items: center;
   justify-content: space-between;
-  width: 140px;
 `;
 
 const MoviePoster = styled.Image`
@@ -63,6 +62,7 @@ const MovieTitle = styled.Text`
   font-size: 16px;
   line-height: 18px;
   width: 120px;
+  height: 40px;
   text-align: left;
 `;
 
