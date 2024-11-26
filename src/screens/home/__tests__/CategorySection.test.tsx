@@ -1,7 +1,8 @@
 import React from 'react';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {fireEvent, waitFor} from '@testing-library/react-native';
 import {CategorySection} from '../components/CategorySection';
 import {Genre} from '../../../types/tmdbType';
+import {testRender} from '../../../utils/testUtils';
 
 jest.mock('../../../hooks/useGetMoviesByGenre.ts', () => ({
   useMoviesByGenre: jest.fn(),
@@ -36,7 +37,7 @@ describe('CategorySection', () => {
       fetchMovies: jest.fn(),
     });
 
-    const {getByText} = render(
+    const {getByText} = testRender(
       <CategorySection genre={mockGenre} isVisible={true} />,
     );
     expect(getByText('Action')).toBeTruthy();
@@ -71,7 +72,7 @@ describe('CategorySection', () => {
       fetchMovies: jest.fn(),
     });
 
-    const {getByTestId} = render(
+    const {getByTestId} = testRender(
       <CategorySection genre={mockGenre} isVisible={true} />,
     );
     const flatList = getByTestId('flatlist-category-Action');

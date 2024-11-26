@@ -27,9 +27,7 @@ describe('useFavorites Hook', () => {
   it('should load favorites on mount', async () => {
     (getFavorites as jest.Mock).mockResolvedValue([mockMovie]);
 
-    const {result} = renderHook<ReturnType<typeof useFavorites>, undefined>(
-      () => useFavorites(),
-    );
+    const {result} = renderHook(() => useFavorites());
 
     await act(async () => {
       jest.useFakeTimers();
@@ -40,9 +38,7 @@ describe('useFavorites Hook', () => {
   });
 
   it('should add a favorite movie', async () => {
-    const {result} = renderHook<ReturnType<typeof useFavorites>, undefined>(
-      () => useFavorites(),
-    );
+    const {result} = renderHook(() => useFavorites());
 
     await act(async () => {
       jest.useFakeTimers();
@@ -59,9 +55,7 @@ describe('useFavorites Hook', () => {
   it('should remove a favorite movie', async () => {
     (getFavorites as jest.Mock).mockResolvedValue([mockMovie]);
 
-    const {result} = renderHook<ReturnType<typeof useFavorites>, undefined>(
-      () => useFavorites(),
-    );
+    const {result} = renderHook(() => useFavorites());
 
     await act(async () => {
       jest.useFakeTimers();

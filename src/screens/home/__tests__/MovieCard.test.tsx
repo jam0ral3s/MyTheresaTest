@@ -1,7 +1,8 @@
 import React from 'react';
-import {render, fireEvent} from '@testing-library/react-native';
+import {fireEvent} from '@testing-library/react-native';
 import {MovieCard} from '../components/MovieCard';
 import {Movie} from '../../../types/tmdbType';
+import {testRender} from '../../../utils/testUtils';
 
 describe('MovieCard', () => {
   const mockMovie: Movie = {
@@ -14,7 +15,7 @@ describe('MovieCard', () => {
   };
 
   it('show all data correctly', () => {
-    const {getByText, getByRole} = render(<MovieCard movie={mockMovie} />);
+    const {getByText, getByRole} = testRender(<MovieCard movie={mockMovie} />);
 
     expect(getByText('Mock Movie')).toBeTruthy();
     expect(getByText('⭐ 8.5')).toBeTruthy();
@@ -26,7 +27,7 @@ describe('MovieCard', () => {
   it('check if interaction of movieCard is correct', () => {
     const onPressMock = jest.fn();
 
-    const {getByRole} = render(
+    const {getByRole} = testRender(
       <MovieCard movie={mockMovie} onPress={onPressMock} />,
     );
 

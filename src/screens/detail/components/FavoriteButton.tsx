@@ -25,7 +25,7 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   return (
     <Container>
       <Button onPress={handlePress} color={color}>
-        <ButtonText>
+        <ButtonText accessible accessibilityRole="button">
           {isFavorite(item) ? 'Remove from Favorites' : 'Add to Favorites'}
         </ButtonText>
       </Button>
