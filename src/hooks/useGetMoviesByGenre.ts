@@ -11,7 +11,6 @@ export const useMoviesByGenre = (genreId: number) => {
   const isLoadingRef = useRef(false);
 
   const fetchMovies = async (pageToFetch: number) => {
-    console.log('fetchMovies');
     if (isLoadingRef.current || pageToFetch > totalPages) {
       return;
     }
@@ -40,7 +39,6 @@ export const useMoviesByGenre = (genreId: number) => {
   };
 
   const loadMoreMovies = () => {
-    console.log('loadMoreMovies');
     if (loading || page > totalPages) {
       return;
     }

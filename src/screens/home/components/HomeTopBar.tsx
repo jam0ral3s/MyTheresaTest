@@ -24,7 +24,7 @@ export const HomeTopBar = ({
         },
         {
           icon: isDarkMode ? Images.darkMode : Images.lightMode,
-          text: 'Favorite',
+          text: 'Toogle Theme',
           onPress: () => {
             toggleDarkMode();
           },

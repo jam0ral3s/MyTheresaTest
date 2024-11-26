@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {Images} from '../styles/images';
@@ -21,15 +21,41 @@ export const TopBar = ({
   onBackPress,
   topbarActions = [],
 }: TopbarProps) => {
+  const [backImageStatusError, setBackImageStatusError] = useState(false);
+  const [imageStatus, setImageStatus] = useState(
+    topbarActions.map(() => ({loading: true, error: false})),
+  );
+
+  const handleImageLoad = (index: number) => {
+    setImageStatus(prev =>
+      prev.map((status, i) =>
+        i === index ? {...status, loading: false} : status,
+      ),
+    );
+  };
+
+  const handleImageError = (index: number) => {
+    setImageStatus(prev =>
+      prev.map((status, i) =>
+        i === index ? {loading: false, error: true} : status,
+      ),
+    );
+  };
+
   return (
     <Container>
       {showBackButton ? (
         <BackButton onPress={onBackPress}>
-          <StyledImage
-            source={Images.back}
-            accessibilityLabel={'Back'}
-            resizeMode="contain"
-          />
+          {backImageStatusError ? (
+            <Text>Back</Text>
+          ) : (
+            <StyledImage
+              source={Images.back}
+              onError={() => setBackImageStatusError(true)}
+              accessibilityLabel={'Back'}
+              resizeMode="contain"
+            />
+          )}
         </BackButton>
       ) : null}
       <Spacer />
@@ -40,11 +66,19 @@ export const TopBar = ({
           renderItem={({item, index}) => (
             <ActionButton key={index} onPress={item.onPress}>
               {item.icon ? (
-                <StyledImage
-                  source={item.icon}
-                  accessibilityLabel={item.text}
-                  resizeMode="contain"
-                />
+                <>
+                  {imageStatus[index].error ? (
+                    <Text>{item.text}</Text>
+                  ) : (
+                    <StyledImage
+                      source={item.icon}
+                      onLoad={() => handleImageLoad(index)}
+                      onError={() => handleImageError(index)}
+                      accessibilityLabel={item.text}
+                      resizeMode="contain"
+                    />
+                  )}
+                </>
               ) : null}
             </ActionButton>
           )}
@@ -70,6 +104,10 @@ const BackButton = styled.TouchableOpacity`
 
 const Spacer = styled.View`
   flex: 1;
+`;
+
+const Text = styled.Text`
+  color: ${props => props.theme.color.basic.text};
 `;
 
 const ActionsContainer = styled.View`

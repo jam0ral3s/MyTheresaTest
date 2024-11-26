@@ -23,7 +23,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
 
   useEffect(() => {
     if (isVisible && movies.length <= 0 && !loading) {
-      console.log('Fetching');
       fetchMovies(1);
     }
   }, [isVisible]);
