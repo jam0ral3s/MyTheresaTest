@@ -17,4 +17,4 @@ const RootApp = () => {
   );
 };
 
-AppRegistry.registerComponent(appName, () => AppProvider({children: <RootApp/>}));
+AppRegistry.registerComponent(appName, () => RootApp);

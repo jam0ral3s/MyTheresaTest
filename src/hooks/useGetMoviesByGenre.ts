@@ -3,7 +3,7 @@ import {fetchMoviesByGenre} from '../service/api/tmdbClient.ts';
 import {Movie, MovieData} from '../types/tmdbType.ts';
 
 export const useMoviesByGenre = (genreId: number) => {
-  const [movies, setMovies] = useState<Movie[] | null>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(Infinity);
@@ -11,9 +11,11 @@ export const useMoviesByGenre = (genreId: number) => {
   const isLoadingRef = useRef(false);
 
   const fetchMovies = async (pageToFetch: number) => {
+    console.log('fetchMovies');
     if (isLoadingRef.current || pageToFetch > totalPages) {
       return;
     }
+
     isLoadingRef.current = true;
     setLoading(true);
     try {
@@ -38,6 +40,7 @@ export const useMoviesByGenre = (genreId: number) => {
   };
 
   const loadMoreMovies = () => {
+    console.log('loadMoreMovies');
     if (loading || page > totalPages) {
       return;
     }
